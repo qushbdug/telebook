@@ -1,57 +1,203 @@
-# Telebook
+# تطبيق كروت الواي فاي - WiFi Cards App
 
-Telegram Mini App for booking hotels *
+تطبيق ويب متكامل لإدارة وبيع كروت الواي فاي للشبكات المختلفة، مبني باستخدام Next.js 14 مع TypeScript و Tailwind CSS.
 
-* — it's a demonstration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) platform. No real hotels and payments.
+## 🚀 المميزات
 
-<p align="center">
-  <a href="https://t.me/tebook_bot/telebook">
-    <picture>
-      <source media="(prefers-color-scheme: dark)"  srcset="./docs/assets/cover.png">
-      <source media="(prefers-color-scheme: light)" srcset="./docs/assets/cover-light.png">
-      <img alt="Editor.js Logo" src="./docs/assets/cover.png">
-    </picture>
-  </a>
-</p>
+### للمشرفين (Admins)
+- لوحة تحكم شاملة لإدارة التطبيق
+- إدارة الشبكات والمنتجات
+- إدارة العملاء والمعاملات
+- تقارير مالية مفصلة
+- نظام صلاحيات متقدم
 
-<p align="center">
- <a href="https://t.me/tebook_bot/telebook">@tebook_bot/telebook</a> |
-  <a href="https://core.telegram.org/bots/webapps">Telegram Mini Apps</a> |
-  <a href="#-how-to-use-repo">Documentation</a>
-</p>
+### للعملاء (Clients)
+- شراء كروت الواي فاي بسهولة
+- محفظة إلكترونية
+- سجل المشتريات
+- دعم متعدد الشبكات
 
-Use this project as an example or template for the creation of your app:
+## 🛠️ التقنيات المستخدمة
 
-1. 🧩 Meet Telegram Vue UI Kit — build native-like interfaces with ready-to-use components
-3. ❤️‍🔥 Instant picture previews and on-device cache
-4. ☘️ Smooth screen transitions
-2. ✨ Advanced DX — fast build, hot reloading, modern code style and linters, well-documented code
-5. 💎 Clean but simple architecture — easy to scale and maintain
-6. 📦 Production-ready deployment setup
-7. 💵 Payments support
-8. 📋 Privacy Policy template
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS
+- **Database**: PostgreSQL مع Prisma ORM
+- **Authentication**: JWT + NextAuth.js
+- **Payments**: Stripe (قابل للتخصيص)
+- **Forms**: React Hook Form + Zod validation
 
-## 👋 About the example
+## 📁 هيكل المشروع
 
-Telebook — is a kind of booking app that runs inside the Telegram. It provides several screens demonstrating different abilities: list views, cards, animations, forms, payments, etc.
+```
+wifi-cards-app/
+├── public/                 # الملفات العامة الثابتة
+├── src/
+│   ├── app/               # هيكل Next.js 14 (App Router)
+│   │   ├── (admin)/       # منطقة المشرف (محمية)
+│   │   ├── (client)/      # منطقة العميل
+│   │   ├── api/           # واجهات API
+│   │   └── auth/          # المصادقة
+│   ├── components/        # مكونات قابلة لإعادة الاستخدام
+│   ├── lib/               # مكتبات وأدوات مساعدة
+│   ├── types/             # تعريفات TypeScript
+│   └── hooks/             # hooks مخصصة
+├── prisma/                # مخطط قاعدة البيانات
+└── docs/                  # التوثيق
+```
 
-It uses mocked data:
-- Cities available for search
-- Hotels
-- Rooms
-- Reviews
-- All mock pictures are generated using [Shedevrum AI](https://shedevrum.ai)
+## 🚀 البدء السريع
 
-## 📖 How to use repo
+### المتطلبات الأساسية
+- Node.js 18+ 
+- PostgreSQL
+- npm أو yarn
 
-Use following instructions
+### التثبيت
 
-- 💗 [Get Started](./docs/GetStarted.md) - basic info about Mini Apps development
-- 🏠 [Frontend tech guide](./client/README.md) - how to setup Client
-- 🎁 [Backend tech guide](./server/README.md) - how to setup Backend
-- 🛍️ [Telegram Vue UI Kit](./client/src/presentation/components/README.md) - UI Kit guide
-- 💰 [How to setup Payments](./docs/Payments.md) - useful information about Payments integration
-- ⛅️ [Deployment guide](./docs/Deployment.md) - how to deploy
-- 😎 [Awesome List](./docs/Awesome.md) - list of resources that can be useful when building your own Telegram Mini App
+1. **استنساخ المشروع**
+```bash
+git clone <repository-url>
+cd wifi-cards-app
+```
 
-Feel free to [Open Issue](https://github.com/neSpecc/telebook/issues/new) with your question or suggestion
+2. **تثبيت التبعيات**
+```bash
+npm install
+# أو
+yarn install
+```
+
+3. **إعداد المتغيرات البيئية**
+```bash
+cp .env.example .env.local
+# قم بتعديل الملف حسب إعداداتك
+```
+
+4. **إعداد قاعدة البيانات**
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+5. **تشغيل التطبيق**
+```bash
+npm run dev
+# أو
+yarn dev
+```
+
+افتح [http://localhost:3000](http://localhost:3000) في المتصفح.
+
+## 🔧 الأوامر المتاحة
+
+```bash
+# التطوير
+npm run dev          # تشغيل خادم التطوير
+npm run build        # بناء التطبيق للإنتاج
+npm run start        # تشغيل التطبيق المبني
+npm run lint         # فحص الكود
+npm run type-check   # فحص أنواع TypeScript
+
+# قاعدة البيانات
+npm run db:generate  # توليد Prisma Client
+npm run db:push      # تحديث قاعدة البيانات
+npm run db:studio    # فتح Prisma Studio
+```
+
+## 🗄️ قاعدة البيانات
+
+المشروع يستخدم PostgreSQL مع Prisma ORM. الجداول الرئيسية:
+
+- **Users**: المستخدمين (مشرفين وعملاء)
+- **Networks**: شبكات الواي فاي
+- **Products**: منتجات الكروت
+- **Orders**: الطلبات
+- **Transactions**: المعاملات المالية
+- **Wallets**: المحافظ الإلكترونية
+
+## 🔐 المصادقة والأمان
+
+- نظام تسجيل دخول آمن
+- JWT tokens للمصادقة
+- حماية المسارات حسب الصلاحيات
+- تشفير كلمات المرور
+- CSRF protection
+
+## 💳 نظام المدفوعات
+
+- دعم Stripe (قابل للتخصيص)
+- معالجة آمنة للمدفوعات
+- webhooks للتحديثات
+- دعم متعدد العملات
+
+## 🎨 الواجهة
+
+- تصميم متجاوب (Responsive)
+- دعم اللغة العربية
+- واجهة مستخدم حديثة
+- مكونات قابلة لإعادة الاستخدام
+- نظام ألوان قابل للتخصيص
+
+## 📱 المكونات
+
+### مكونات واجهة المستخدم
+- بطاقات (Cards)
+- جداول البيانات (Tables)
+- نماذج الإدخال (Forms)
+- النوافذ المنبثقة (Modals)
+- عناصر التنقل (Navigation)
+
+### مكونات خاصة
+- مكونات المشرف
+- مكونات العميل
+- مكونات مشتركة
+
+## 🧪 الاختبار
+
+```bash
+# تشغيل الاختبارات
+npm run test
+
+# تشغيل الاختبارات مع التغطية
+npm run test:coverage
+```
+
+## 📦 النشر
+
+### Vercel (مُوصى به)
+```bash
+npm run build
+vercel --prod
+```
+
+### Docker
+```bash
+docker build -t wifi-cards-app .
+docker run -p 3000:3000 wifi-cards-app
+```
+
+## 🤝 المساهمة
+
+1. Fork المشروع
+2. إنشاء فرع للميزة الجديدة (`git checkout -b feature/AmazingFeature`)
+3. Commit التغييرات (`git commit -m 'Add some AmazingFeature'`)
+4. Push للفرع (`git push origin feature/AmazingFeature`)
+5. فتح Pull Request
+
+## 📄 الترخيص
+
+هذا المشروع مرخص تحت رخصة MIT - انظر ملف [LICENSE](LICENSE) للتفاصيل.
+
+## 📞 الدعم
+
+- إنشاء Issue جديد
+- التواصل عبر البريد الإلكتروني
+- الوثائق في مجلد `docs/`
+
+## 🙏 الشكر
+
+شكراً لجميع المساهمين والمطورين الذين ساعدوا في تطوير هذا المشروع.
+
+---
+
+**ملاحظة**: هذا المشروع مخصص للتعلم والتطوير. تأكد من اختبار جميع الميزات قبل استخدامها في الإنتاج.

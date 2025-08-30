@@ -113,3 +113,4 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
     }
   })
 }
+h

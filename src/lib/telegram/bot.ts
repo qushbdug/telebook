@@ -1,8 +1,8 @@
 import { TelegramBot } from './types'
 import { handleMessage, handleCallbackQuery, handleCommand } from './handlers'
 
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8426224122:AAE4Ieh_p2ERWA33J9wK-ORo8zgLNmXxQW0'
-const BOT_USERNAME = process.env.TELEGRAM_BOT_USERNAME || 'ax_m99bot'
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8261915823:AAEXH5OAPxll8wDT6RsFwozSjeYPZmUcznU'
+const BOT_USERNAME = process.env.TELEGRAM_BOT_USERNAME || 'FastCard_Ym_Bot'
 
 export class WiFiCardsBot implements TelegramBot {
   private token: string

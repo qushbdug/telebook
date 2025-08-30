@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Noto_Sans_Arabic } from 'next/font/google'
 import './globals.css'
+import { TelegramProvider } from '@/contexts/TelegramContext'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -29,9 +30,11 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className={`${inter.variable} ${notoSansArabic.variable} font-sans antialiased`}>
-        <div className="min-h-screen bg-background">
-          {children}
-        </div>
+        <TelegramProvider>
+          <div className="min-h-screen bg-background">
+            {children}
+          </div>
+        </TelegramProvider>
       </body>
     </html>
   )

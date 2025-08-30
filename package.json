@@ -10,7 +10,9 @@
     "type-check": "tsc --noEmit",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "bot": "tsx src/scripts/run-bot.ts",
+    "bot:dev": "tsx --watch src/scripts/run-bot.ts"
   },
   "dependencies": {
     "next": "14.0.0",

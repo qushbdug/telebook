@@ -1,9 +1,9 @@
 import { TelegramMessage, TelegramCallbackQuery } from './types'
 import { bot } from './bot'
 import { handleStart, handleHelp, handleProducts, handleNetworks, handleWallet, handleSupport } from './commands'
-import { 
-  handleProductSelection, 
-  handleNetworkSelection, 
+import {
+  handleProductSelection,
+  handleNetworkSelection,
   handlePaymentMethod,
   handleBackToMain,
   handleBackToProducts,
@@ -25,6 +25,13 @@ import {
   handleSupportContact,
   handleSupportGuide
 } from './callbacks'
+import {
+  createWelcomeMessage,
+  createNetworksMessage,
+  createWalletMessage,
+  createHelpMessage,
+  createAboutMessage
+} from './setup-webapp'
 
 // معالجة الرسائل الواردة
 export async function handleMessage(message: TelegramMessage) {
@@ -173,6 +180,16 @@ export async function handleCallbackQuery(callbackQuery: TelegramCallbackQuery) 
       await handleSupportGuide(callbackQuery)
     } else if (data === 'contact_support') {
       await handleSupport({ chat: message.chat } as TelegramMessage)
+    } else if (data === 'show_networks') {
+      await showNetworksMenu(message.chat.id)
+    } else if (data === 'show_wallet') {
+      await showWalletMenu(message.chat.id)
+    } else if (data === 'help') {
+      const helpMessage = createHelpMessage()
+      await bot.sendMessageWithInlineKeyboard(message.chat.id, helpMessage.text, helpMessage.reply_markup.inline_keyboard)
+    } else if (data === 'about') {
+      const aboutMessage = createAboutMessage()
+      await bot.sendMessageWithInlineKeyboard(message.chat.id, aboutMessage.text, aboutMessage.reply_markup.inline_keyboard)
     }
 
   } catch (error) {
@@ -191,22 +208,8 @@ export async function handleCallbackQuery(callbackQuery: TelegramCallbackQuery) 
 
 // عرض القائمة الرئيسية
 export async function showMainMenu(chatId: number) {
-  const mainMenu = [
-    ['🛍️ المنتجات', '🌐 الشبكات'],
-    ['💰 المحفظة', '📞 الدعم'],
-    ['ℹ️ المساعدة']
-  ]
-
-  const welcomeText = 
-    '🌟 *مرحباً بك في بوت كروت الواي فاي!*\n\n' +
-    'اختر من القائمة أدناه ما تريد القيام به:\n\n' +
-    '🛍️ *المنتجات* - تصفح واشترِ كروت الإنترنت\n' +
-    '🌐 *الشبكات* - تعرف على الشبكات المتاحة\n' +
-    '💰 *المحفظة* - أدر رصيدك ومعاملاتك\n' +
-    '📞 *الدعم* - احصل على المساعدة\n' +
-    'ℹ️ *المساعدة* - تعرف على كيفية الاستخدام'
-
-  await bot.sendMessageWithKeyboard(chatId, welcomeText, mainMenu)
+  const welcomeMessage = createWelcomeMessage()
+  await bot.sendMessageWithInlineKeyboard(chatId, welcomeMessage.text, welcomeMessage.reply_markup.inline_keyboard)
 }
 
 // عرض قائمة المنتجات
@@ -240,71 +243,14 @@ export async function showProductsMenu(chatId: number) {
 
 // عرض قائمة الشبكات
 export async function showNetworksMenu(chatId: number) {
-  const networksText = 
-    '🌐 *الشبكات المتاحة:*\n\n' +
-    'اختر الشبكة التي تريد التعرف عليها:\n\n' +
-    '📱 *STC (شبكة الاتصالات السعودية):*\n' +
-    '• أكبر شبكة اتصالات في المملكة\n' +
-    '• تغطية شاملة في جميع المناطق\n' +
-    '• سرعة عالية وجودة ممتازة\n\n' +
-    '📶 *موبايلي:*\n' +
-    '• شبكة اتصالات رائدة\n' +
-    '• أسعار منافسة\n' +
-    '• خدمة عملاء متميزة\n\n' +
-    '🌍 *زين السعودية:*\n' +
-    '• شبكة حديثة ومتطورة\n' +
-    '• تقنيات متقدمة\n' +
-    '• مرونة في الباقات'
-
-  const inlineKeyboard = [
-    [
-      { text: '📱 STC', callback_data: 'network_info_stc' },
-      { text: '📶 موبايلي', callback_data: 'network_info_mobily' },
-      { text: '🌍 زين', callback_data: 'network_info_zain' }
-    ],
-    [
-      { text: '🛍️ شراء منتجات', callback_data: 'show_products' }
-    ],
-    [
-      { text: '🔙 العودة للقائمة الرئيسية', callback_data: 'back_to_main' }
-    ]
-  ]
-
-  await bot.sendMessageWithInlineKeyboard(chatId, networksText, inlineKeyboard)
+  const networksMessage = createNetworksMessage()
+  await bot.sendMessageWithInlineKeyboard(chatId, networksMessage.text, networksMessage.reply_markup.inline_keyboard)
 }
 
 // عرض قائمة المحفظة
 export async function showWalletMenu(chatId: number) {
-  const walletText = 
-    '💰 *المحفظة الإلكترونية:*\n\n' +
-    'اختر العملية التي تريد القيام بها:\n\n' +
-    '💳 *إضافة رصيد:*\n' +
-    '• بطاقة ائتمان\n' +
-    '• تحويل بنكي\n' +
-    '• محفظة إلكترونية\n\n' +
-    '📊 *عرض الرصيد:*\n' +
-    '• رصيدك الحالي\n' +
-    '• سجل المعاملات\n' +
-    '• إحصائيات الإنفاق\n\n' +
-    '💸 *سحب رصيد:*\n' +
-    '• إلى حسابك البنكي\n' +
-    '• إلى محفظة إلكترونية'
-
-  const inlineKeyboard = [
-    [
-      { text: '💳 إضافة رصيد', callback_data: 'wallet_add_funds' },
-      { text: '📊 عرض الرصيد', callback_data: 'wallet_balance' }
-    ],
-    [
-      { text: '💸 سحب رصيد', callback_data: 'wallet_withdraw' },
-      { text: '📋 سجل المعاملات', callback_data: 'wallet_transactions' }
-    ],
-    [
-      { text: '🔙 العودة للقائمة الرئيسية', callback_data: 'back_to_main' }
-    ]
-  ]
-
-  await bot.sendMessageWithInlineKeyboard(chatId, walletText, inlineKeyboard)
+  const walletMessage = createWalletMessage()
+  await bot.sendMessageWithInlineKeyboard(chatId, walletMessage.text, walletMessage.reply_markup.inline_keyboard)
 }
 
 // عرض قائمة الدعم
